@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royale Experience Global Concept</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- HERO -->
+  <section class="bg-white">
+    <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight">Premium Foodstuff Delivery You Can Trust</h1>
+        <p class="mt-4 text-lg text-gray-600">
+          Fresh produce, pantry essentials, and Ramadan food packs — sourced, packed, and delivered nationwide with care.
+        </p>
+        <p class="mt-2 italic text-gray-500">We shop. We pack. We deliver. You relax.</p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <button class="bg-black text-white px-6 py-3 rounded-lg">Order Now</button>
+          <button class="border border-black px-6 py-3 rounded-lg">Send Your Food List</button>
+          <button class="border border-black px-6 py-3 rounded-lg">Request a Quote</button>
+          <button class="border border-black px-6 py-3 rounded-lg">Book Bulk Supply</button>
+        </div>
+      </div>
+      <div class="hidden md:block">
+        <img src="https://images.unsplash.com/photo-1604908177522-432c7c48a7b2" class="rounded-2xl shadow" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="py-14 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-semibold mb-8">Why Customers Trust Us</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow">Premium quality sourcing</div>
+        <div class="bg-white p-6 rounded-xl shadow">Hygienic packaging</div>
+        <div class="bg-white p-6 rounded-xl shadow">Nationwide doorstep delivery</div>
+        <div class="bg-white p-6 rounded-xl shadow">Competitive pricing</div>
+        <div class="bg-white p-6 rounded-xl shadow">Bulk & corporate supply</div>
+        <div class="bg-white p-6 rounded-xl shadow">Excellent customer service</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-semibold">Shop Food Essentials</h2>
+        <button onclick="toggleCart()" class="relative bg-black text-white px-5 py-2 rounded-lg">
+          Cart (<span id="cartCount">0</span>)
+        </button>
+      </div>
+
+      <div id="productGrid" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition">
+    <div class="p-6 flex flex-col h-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-2xl font-semibold">Your Cart</h3>
+        <button onclick="toggleCart()">✕</button>
+      </div>
+      <div id="cartItems" class="flex-1 overflow-y-auto"></div>
+      <div class="border-t pt-4">
+        <p class="font-semibold">Total: ₦<span id="cartTotal">0</span></p>
+        <button onclick="checkout()" class="mt-4 w-full bg-black text-white py-3 rounded-lg">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded-xl w-full max-w-md">
+      <h3 class="text-xl font-semibold mb-4">Checkout</h3>
+      <input id="name" placeholder="Full Name" class="w-full border p-2 mb-2" />
+      <input id="phone" placeholder="Phone Number" class="w-full border p-2 mb-2" />
+      <textarea id="address" placeholder="Delivery Address" class="w-full border p-2 mb-2"></textarea>
+      <button onclick="submitOrder()" class="w-full bg-black text-white py-3 rounded-lg">Place Order</button>
+    </div>
+  </div>
+
+<script>
+const SHEET_API = "https://sheet.spacet.me/1SgAk7IXN33V22m3e7vcBnykbqWbTqOtZM4KabkbGzbY/items.json";
+const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
+const TELEGRAM_CHAT_ID = "YOUR_GROUP_ID";
+
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+}
+
+function toggleCart() {
+    document.getElementById('cartDrawer').classList.toggle('translate-x-full');
+}
+
+async function loadProducts() {
+    const res = await fetch(SHEET_API);
+    const {values} = await res.json();
+
+    const [header, ...rows] = values
+    const products = rows.map(row => {
+        const entries = header.map((key, i) => [key, row[i]])
+        return Object.fromEntries(entries)
+    })
+
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+
+    products.forEach(p => {
+        grid.innerHTML += `
+            <div class="bg-white p-4 rounded-xl shadow">
+                <h3 class="font-semibold">${p["Food Item"]}</h3>
+                <p class="text-sm text-gray-500">₦${p.Amount} / ${p.Unit}</p>
+                <div class="mt-3 flex items-center gap-2">
+                    <input type="number" value="1" min="1" class="w-16 border p-1 rounded text-center qty-input" />
+                    <button onclick='addToCartWithQty(${JSON.stringify(p)}, this)' class="flex-1 bg-black text-white py-2 rounded">Add</button>
+                </div>
+            </div>`;
+    });
+}
+
+function addToCartWithQty(product, button) {
+    const qtyInput = button.parentElement.querySelector('.qty-input');
+    const quantity = parseInt(qtyInput.value) || 1;
+    
+    const existingItem = cart.find(item => item["Food Item"] === product["Food Item"]);
+    
+    if (existingItem) {
+        existingItem.quantity = (existingItem.quantity || 1) + quantity;
+    } else {
+        product.quantity = quantity;
+        cart.push(product);
+    }
+    saveCart();
+}
+
+function addToCart(product) {
+    const existingItem = cart.find(item => item["Food Item"] === product["Food Item"]);
+    
+    if (existingItem) {
+        existingItem.quantity = (existingItem.quantity || 1) + 1;
+    } else {
+        product.quantity = 1;
+        cart.push(product);
+    }
+    saveCart();
+}
+
+function incrementQty(index) {
+    cart[index].quantity = (cart[index].quantity || 1) + 1;
+    saveCart();
+}
+
+function decrementQty(index) {
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+        saveCart();
+    }
+}
+
+function updateQty(index, newQty) {
+    const qty = parseInt(newQty) || 1;
+    if (qty > 0) {
+        cart[index].quantity = qty;
+        saveCart();
+    }
+}
+
+function renderCart() {
+    const container = document.getElementById('cartItems');
+    const totalEl = document.getElementById('cartTotal');
+    const countEl = document.getElementById('cartCount');
+
+    container.innerHTML = '';
+    let total = 0;
+    let itemCount = 0;
+
+    cart.forEach((item, index) => {
+        const qty = item.quantity || 1;
+        const itemTotal = Number(item.Amount) * qty;
+        total += itemTotal;
+        itemCount += qty;
+        
+        container.innerHTML += `
+            <div class="mb-3 pb-3 border-b">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <p class="font-medium">${item["Food Item"]}</p>
+                        <p class="text-sm text-gray-500">₦${item.Amount} / ${item.Unit}</p>
+                    </div>
+                    <button onclick='removeFromCart(${index})' class="text-red-500 text-sm">Remove</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick='decrementQty(${index})' class="bg-gray-200 px-2 py-1 rounded">−</button>
+                    <input type="number" value="${qty}" min="1" onchange='updateQty(${index}, this.value)' class="w-12 border p-1 rounded text-center" />
+                    <button onclick='incrementQty(${index})' class="bg-gray-200 px-2 py-1 rounded">+</button>
+                    <span class="ml-auto font-semibold">₦${itemTotal.toLocaleString()}</span>
+                </div>
+            </div>`;
+    });
+
+    totalEl.textContent = total.toLocaleString();
+    countEl.textContent = itemCount;
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty');
+        return;
+    }
+    document.getElementById('checkoutModal').classList.remove('hidden');
+}
+
+async function submitOrder() {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+
+    if (!name || !phone || !address) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    let message = `NEW ORDER%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0AItems:%0A`;
+    let total = 0;
+    
+    cart.forEach(i => {
+        const qty = i.quantity || 1;
+        const itemTotal = Number(i.Amount) * qty;
+        total += itemTotal;
+        message += `- ${i["Food Item"]} (₦${i.Amount} x ${qty} ${i.Unit} = ₦${itemTotal})%0A`;
+    });
+    
+    message += `%0ATotal: ₦${total}`;
+
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}`);
+
+    alert('Order placed successfully');
+    cart = [];
+    saveCart();
+    document.getElementById('checkoutModal').classList.add('hidden');
+    document.getElementById('name').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('address').value = '';
+}
+
+loadProducts();
+renderCart();
+</script>
+
+</body>
+</html>
