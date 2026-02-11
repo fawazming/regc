@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royale Experience Global Concept</title>
+  <link rel="icon" type="image/x-icon" href="./logo.jpg">
+  <meta property="og:title" content="Royale Experience Global Concept" />
+  <meta property="og:description" content="Premium Foodstuff Delivery You Can Trust" />
+  <meta property="og:image" content="https://example.com/path/to/image.jpg" />
+  <meta property="og:url" content="https://example.com" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Royale Experience Global Concept" />
+  <meta name="twitter:description" content="Premium Foodstuff Delivery You Can Trust" />
+  <meta name="twitter:image" content="https://example.com/path/to/image.jpg" />
+  <meta name="twitter:url" content="https://example.com" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-30 backdrop-blur-lg shadow-lg p-4 z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="./logo.png" alt="Logo" class="h-10 mr-3" />
+        <ul class="flex space-x-6">
+          <li><a href="#hero" class="text-gray-800 hover:text-black">Home</a></li>
+          <li><a href="#trust" class="text-gray-800 hover:text-black">Trust</a></li>
+          <li><a href="#products" class="text-gray-800 hover:text-black">Products</a></li>
+        </ul>
+      </div>
+      <a href="https://wa.me/2348166978348" target="_blank" class="bg-black text-white px-4 py-2 rounded-lg">Contact Us</a>
+    </div>
+  </nav>
+
+<section id="callback" class="py-20 pt-32 h-screen">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">Congratulations!</h2>
+        <p class="text-lg mb-2">Your order has been successfully placed.</p>
+        <div class="bg-white shadow-md rounded-lg p-6 inline-block">
+            <h3 class="text-xl font-semibold mb-2">Order Details</h3>
+            <p><strong>Amount:</strong> <span id="amt"></span></p>
+            <p><strong>Transfer Name:</strong> <span id="sender_name"></span></p>
+            <p><strong>Account Details:</strong> <span id="account_details"></span></p>
+        </div>
+        <p class="mt-4">Thank you for choosing Royale Experience Global Concept!</p>
+        <div id="confetti"></div>
+        <span class="emoji" role="img" aria-label="party">🎉</span>
+    </div>
+</section>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+
+  if (ref) {
+    fetch(`https://payflow.sgm.ng/verifypro/${ref}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          document.getElementById('amt').textContent = `₦${data.data.amount}`;
+          document.getElementById('sender_name').textContent = data.data.sender_name;
+          document.getElementById('account_details').textContent = `${data.data.sender_account_number} (${data.data.sender_bank})`;
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
+
+  
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-white py-4">
+    <div class="max-w-7xl mx-auto text-center">
+      <p>Crafted with ❤️ by RayyanTech</p>
+      <p>&copy; 2026 REGC</p>
+    </div>
+  </footer>

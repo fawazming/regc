@@ -4,17 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Royale Experience Global Concept</title>
+  <link rel="icon" type="image/x-icon" href="./logo.jpg">
+  <meta property="og:title" content="Royale Experience Global Concept" />
+  <meta property="og:description" content="Premium Foodstuff Delivery You Can Trust" />
+  <meta property="og:image" content="https://example.com/path/to/image.jpg" />
+  <meta property="og:url" content="https://example.com" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Royale Experience Global Concept" />
+  <meta name="twitter:description" content="Premium Foodstuff Delivery You Can Trust" />
+  <meta name="twitter:image" content="https://example.com/path/to/image.jpg" />
+  <meta name="twitter:url" content="https://example.com" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-30 backdrop-blur-lg shadow-lg p-4 z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="./logo.png" alt="Logo" class="h-10 mr-3" />
+        <ul class="flex space-x-6">
+          <li><a href="#hero" class="text-gray-800 hover:text-black">Home</a></li>
+          <li><a href="#trust" class="text-gray-800 hover:text-black">Trust</a></li>
+          <li><a href="#products" class="text-gray-800 hover:text-black">Products</a></li>
+        </ul>
+      </div>
+      <a href="https://wa.me/2348166978348" target="_blank" class="bg-black text-white px-4 py-2 rounded-lg">Contact Us</a>
+    </div>
+  </nav>
+
   <!-- HERO -->
-  <section class="bg-white">
+  <section class="bg-white mt-16" id="hero">
     <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-bold leading-tight">Premium Foodstuff Delivery You Can Trust</h1>
         <p class="mt-4 text-lg text-gray-600">
-          Fresh produce, pantry essentials, and Ramadan food packs — sourced, packed, and delivered nationwide with care.
+            Experience the finest selection of fresh produce, pantry essentials, and exclusive Ramadan food packs from Royale Experience Global Concept — expertly sourced, meticulously packed, and delivered nationwide with utmost care.
         </p>
         <p class="mt-2 italic text-gray-500">We shop. We pack. We deliver. You relax.</p>
 
@@ -26,28 +53,67 @@
         </div>
       </div>
       <div class="hidden md:block">
-        <img src="https://images.unsplash.com/photo-1604908177522-432c7c48a7b2" class="rounded-2xl shadow" />
+        <img src="./hero.jpg" class="rounded-2xl shadow" />
       </div>
     </div>
   </section>
 
   <!-- TRUST -->
-  <section class="py-14 bg-gray-100">
+  <section class="py-14 bg-gray-100" id="trust">
     <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-3xl font-semibold mb-8">Why Customers Trust Us</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow">Premium quality sourcing</div>
-        <div class="bg-white p-6 rounded-xl shadow">Hygienic packaging</div>
-        <div class="bg-white p-6 rounded-xl shadow">Nationwide doorstep delivery</div>
-        <div class="bg-white p-6 rounded-xl shadow">Competitive pricing</div>
-        <div class="bg-white p-6 rounded-xl shadow">Bulk & corporate supply</div>
-        <div class="bg-white p-6 rounded-xl shadow">Excellent customer service</div>
+      <h2 class="text-3xl font-semibold mb-5">Why Customers Trust Us</h2>
+      <div class="md:hidden block mb-8">
+        <img src="./hero.jpg" class="rounded-2xl shadow" />
+      </div>
+      <div class="grid md:grid-cols-3 grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">🍽️</span>
+          <div>
+            <h4 class="font-semibold">Premium Quality Sourcing</h4>
+            <p class="text-sm text-gray-500">We ensure the best quality ingredients for your meals.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">📦</span>
+          <div>
+            <h4 class="font-semibold">Hygienic Packaging</h4>
+            <p class="text-sm text-gray-500">All products are packaged with utmost care and hygiene.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">🚚</span>
+          <div>
+            <h4 class="font-semibold">Nationwide Doorstep Delivery</h4>
+            <p class="text-sm text-gray-500">We deliver fresh food right to your doorstep, anywhere in the country.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">💰</span>
+          <div>
+            <h4 class="font-semibold">Competitive Pricing</h4>
+            <p class="text-sm text-gray-500">Enjoy the best prices without compromising on quality.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">🏢</span>
+          <div>
+            <h4 class="font-semibold">Bulk & Corporate Supply</h4>
+            <p class="text-sm text-gray-500">Special rates for bulk orders and corporate clients.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow flex items-start">
+          <span class="text-2xl mr-3">🤝</span>
+          <div>
+            <h4 class="font-semibold">Excellent Customer Service</h4>
+            <p class="text-sm text-gray-500">Our team is here to assist you with any inquiries.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- PRODUCTS -->
-  <section class="py-16">
+  <section class="py-16" id="products">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex justify-between items-center mb-8">
         <h2 class="text-3xl font-semibold">Shop Food Essentials</h2>
@@ -56,9 +122,17 @@
         </button>
       </div>
 
-      <div id="productGrid" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+      <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-white py-4">
+    <div class="max-w-7xl mx-auto text-center">
+      <p>Crafted with ❤️ by RayyanTech</p>
+      <p>&copy; 2026 REGC</p>
+    </div>
+  </footer>
 
   <!-- CART DRAWER -->
   <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition">
@@ -69,6 +143,7 @@
       </div>
       <div id="cartItems" class="flex-1 overflow-y-auto"></div>
       <div class="border-t pt-4">
+        <p class="font-semibold">Payment Gateway: ₦100</p>
         <p class="font-semibold">Total: ₦<span id="cartTotal">0</span></p>
         <button onclick="checkout()" class="mt-4 w-full bg-black text-white py-3 rounded-lg">Checkout</button>
       </div>
@@ -80,16 +155,16 @@
     <div class="bg-white p-6 rounded-xl w-full max-w-md">
       <h3 class="text-xl font-semibold mb-4">Checkout</h3>
       <input id="name" placeholder="Full Name" class="w-full border p-2 mb-2" />
-      <input id="phone" placeholder="Phone Number" class="w-full border p-2 mb-2" />
+      <input id="email" placeholder="Email Address" type="email" class="w-full border p-2 mb-2" />
+      <input id="phone" placeholder="Phone Number (Whatsapp)" class="w-full border p-2 mb-2" />
       <textarea id="address" placeholder="Delivery Address" class="w-full border p-2 mb-2"></textarea>
-      <button onclick="submitOrder()" class="w-full bg-black text-white py-3 rounded-lg">Place Order</button>
+      <button onclick="submitOrder()" id="submitOrder" class="w-full bg-black text-white py-3 rounded-lg">Place Order</button>
     </div>
   </div>
-
 <script>
+  
 const SHEET_API = "https://sheet.spacet.me/1SgAk7IXN33V22m3e7vcBnykbqWbTqOtZM4KabkbGzbY/items.json";
-const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
-const TELEGRAM_CHAT_ID = "YOUR_GROUP_ID";
+// const TELEGRAM_BOT_TOKEN = "";
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
@@ -181,7 +256,7 @@ function renderCart() {
     const countEl = document.getElementById('cartCount');
 
     container.innerHTML = '';
-    let total = 0;
+    let total = 100;
     let itemCount = 0;
 
     cart.forEach((item, index) => {
@@ -224,43 +299,11 @@ function checkout() {
     }
     document.getElementById('checkoutModal').classList.remove('hidden');
 }
-
-async function submitOrder() {
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const address = document.getElementById('address').value;
-
-    if (!name || !phone || !address) {
-        alert('Please fill all fields');
-        return;
-    }
-
-    let message = `NEW ORDER%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0AItems:%0A`;
-    let total = 0;
-    
-    cart.forEach(i => {
-        const qty = i.quantity || 1;
-        const itemTotal = Number(i.Amount) * qty;
-        total += itemTotal;
-        message += `- ${i["Food Item"]} (₦${i.Amount} x ${qty} ${i.Unit} = ₦${itemTotal})%0A`;
-    });
-    
-    message += `%0ATotal: ₦${total}`;
-
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}`);
-
-    alert('Order placed successfully');
-    cart = [];
-    saveCart();
-    document.getElementById('checkoutModal').classList.add('hidden');
-    document.getElementById('name').value = '';
-    document.getElementById('phone').value = '';
-    document.getElementById('address').value = '';
-}
-
+</script>
+<script src="logic.min.js"></script>
+<script>
 loadProducts();
 renderCart();
 </script>
-
 </body>
 </html>
