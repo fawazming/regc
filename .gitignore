@@ -1,0 +1,11 @@
+# Environment secrets (do not commit)
+.env
+.env.local
+
+# Runtime artifacts
+cache/
+logs/
+
+# OS / editor
+Thumbs.db
+.DS_Store

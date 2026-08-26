@@ -1,0 +1,67 @@
+# ============================================================
+# ROYALE EXPERIENCE GLOBAL CONCEPT (REGC) — Apache pretty-URL routing
+# Requires mod_rewrite (default on XAMPP/Apache).
+# ============================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Force HTTPS (uncomment on production with a valid SSL cert)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Pretty URLs are routed through the front-controller.
+    # Real files/dirs are served directly.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ------------------------------------------------------------
+# Block sensitive files from direct access
+# ------------------------------------------------------------
+<FilesMatch "^(\.env|\.env\.example|composer\.(json|lock)|\.gitignore|\.htaccess)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "\.(sql|log|bak)$">
+    Require all denied
+</FilesMatch>
+# Block access to internal directories
+RedirectMatch 403 ^/includes/.*$
+RedirectMatch 403 ^/cache/.*$
+RedirectMatch 403 ^/logs/.*$
+RedirectMatch 403 ^/database/.*$
+
+# ------------------------------------------------------------
+# Security headers
+# ------------------------------------------------------------
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set X-XSS-Protection "0"
+</IfModule>
+
+# ------------------------------------------------------------
+# Browser caching (for performance/PageSpeed)
+# ------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresDefault "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript text/javascript application/json application/ld+json image/svg+xml
+</IfModule>
